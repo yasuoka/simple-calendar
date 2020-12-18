@@ -152,7 +152,7 @@ function addPage(doc, year, month, event_get = null, wdayoff = 0)
     var wdaylabels = [
 	["Sunday", wdaytext("#cc3333")],  ["Monday", wdaytext()],
 	["Tuesday", wdaytext()], ["Wednesday", wdaytext()],
-	["Thurthday", wdaytext()], ["Friday", wdaytext()],
+	["Thursday", wdaytext()], ["Friday", wdaytext()],
 	["Saturday", wdaytext("#3333cc")]];
     // rotate with wdayoff
     for (var i = 0; i < wdayoff; i++)
