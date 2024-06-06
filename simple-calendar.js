@@ -78,7 +78,7 @@ function days_in_month(year, month)
     const days= [
 	[ 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 ],
 	[ 31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 ]];
-    const leapyear = (year <= 1752)? (year % 4) == 0 :
+    var leapyear = (year <= 1752)? (year % 4) == 0 :
 	((year % 4) == 0 && (year % 100) != 0) || (year % 400) == 0;
     return days[leapyear? 1 : 0][month - 1];
 }
