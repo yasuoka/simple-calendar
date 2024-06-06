@@ -15,11 +15,13 @@
  */
 
 // mm => point
-function pt(mm) {
+function pt(mm)
+{
     return (mm * (72 / 25.4));
 }
 
-function shape(doc, x, y) {
+function shape(doc, x, y)
+{
     var o = { doc: doc, x: x, y: y }
     o.line = function(x0, y0, x1, y1) {
 	this.doc
@@ -31,25 +33,26 @@ function shape(doc, x, y) {
 }
 
 // horizontal text box
-function htext(doc, x, y, width, height) {
+function htext(doc, x, y, width, height)
+{
     var o = { doc: doc, x: x, x0: x, y: y, width: width, height: height }
     o.text = function(text, opt) {
 	var p = [ 1, 1, 1, 1 ];
-	if ('padding' in opt) {
+	if ("padding" in opt) {
 	    if (Array.isArray(opt.padding))
 		p = opt.padding;
 	    else
 		p = [ opt.padding, opt.padding, opt.padding, opt.padding ];
 	}
-	if (!('baseline' in opt))
+	if (!("baseline" in opt))
 	    opt.baseline = "middle";
-	if ('font' in opt)
+	if ("font" in opt)
 	    doc.font(opt.Font);
-	if ('fontColor' in opt)
+	if ("fontColor" in opt)
 	    doc.fillColor(opt.fontColor);
 	else
 	    doc.fillColor("#000000");
-	if ('fontSize' in opt)
+	if ("fontSize" in opt)
 	    doc.fontSize(opt.fontSize);
 	var opt0 = {
 	    width: opt.width - p[1] - p[3], baseline: opt.baseline,
