@@ -22,58 +22,60 @@ function pt(mm)
 
 function shape(doc, x, y)
 {
-    var o = { doc: doc, x: x, y: y }
-    o.line = function(x0, y0, x1, y1) {
-	this.doc
-	    .moveTo(this.x + x0, this.y + y0)
-	    .lineTo(this.x + x0 + x1, this.y + y0 + y1);
-	return this;
+    return {
+	doc: doc, x: x, y: y,
+	line: function(x0, y0, x1, y1) {
+	    this.doc
+		.moveTo(this.x + x0, this.y + y0)
+		.lineTo(this.x + x0 + x1, this.y + y0 + y1);
+	    return this;
+	}
     };
-    return o;
 }
 
 // horizontal text box
 function htext(doc, x, y, width, height)
 {
-    var o = { doc: doc, x: x, x0: x, y: y, width: width, height: height }
-    o.text = function(text, opt) {
-	var p = [ 1, 1, 1, 1 ];
-	if ("padding" in opt) {
-	    if (Array.isArray(opt.padding))
-		p = opt.padding;
+    return {
+	doc: doc, x: x, x0: x, y: y, width: width, height: height,
+	text: function(text, opt) {
+	    var p = [ 1, 1, 1, 1 ];
+	    if ("padding" in opt) {
+		if (Array.isArray(opt.padding))
+		    p = opt.padding;
+		else
+		    p = [ opt.padding, opt.padding, opt.padding, opt.padding ];
+	    }
+	    if (!("baseline" in opt))
+		opt.baseline = "middle";
+	    if ("font" in opt)
+		doc.font(opt.Font);
+	    if ("fontColor" in opt)
+		doc.fillColor(opt.fontColor);
 	    else
-		p = [ opt.padding, opt.padding, opt.padding, opt.padding ];
+		doc.fillColor("#000000");
+	    if ("fontSize" in opt)
+		doc.fontSize(opt.fontSize);
+	    var opt0 = {
+		width: opt.width - p[1] - p[3], baseline: opt.baseline,
+		align: opt.align
+	    };
+	    doc.text(text,
+		(opt.align === "right")
+		    ? this.x0 + this.width - opt.width - p[3]
+		    : this.x + p[1],
+		(opt.baseline === "top")
+		    ? this.y + p[0]
+		    :
+		(opt.baseline === "middle")
+		    ? this.y + p[0] + this.height / 2
+		    : this.y + this.height - p[2],
+		opt0);
+	    this.x += opt.width;
+	    doc.font("Helvetica");
+	    return this;
 	}
-	if (!("baseline" in opt))
-	    opt.baseline = "middle";
-	if ("font" in opt)
-	    doc.font(opt.Font);
-	if ("fontColor" in opt)
-	    doc.fillColor(opt.fontColor);
-	else
-	    doc.fillColor("#000000");
-	if ("fontSize" in opt)
-	    doc.fontSize(opt.fontSize);
-	var opt0 = {
-	    width: opt.width - p[1] - p[3], baseline: opt.baseline,
-	    align: opt.align
-	};
-	doc.text(text,
-	    (opt.align === "right")
-		? this.x0 + this.width - opt.width - p[3]
-		: this.x + p[1],
-	    (opt.baseline === "top")
-		? this.y + p[0]
-		:
-	    (opt.baseline === "middle")
-		? this.y + p[0] + this.height / 2
-		: this.y + this.height - p[2],
-	    opt0);
-	this.x += opt.width;
-	doc.font("Helvetica");
-	return o;
-    }
-    return o;
+    };
 }
 
 function days_in_month(year, month)
