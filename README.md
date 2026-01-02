@@ -8,7 +8,7 @@ Create a simple calendar PDF file for printing.
 
 sample:
 
-```
+```js
 <script src="japanese-holidays.min.js"></script>
 <script src="pdfkit.standalone.js" charset="UTF-8"></script>
 <script src="simple-calendar.js" charset="UTF-8"></script>
